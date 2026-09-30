@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chinmay Ullegaddi | Software &amp; IoT Developer</title>
+  <meta name="description" content="Portfolio of Chinmay Ullegaddi, B.Tech CSIT student at REVA University: IoT, low-level programming and data dashboards." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Doto:wght@400;700;900&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: {
+        fontFamily: {
+          dot: ['Doto', '"Space Mono"', 'monospace'],
+          mono: ['"Space Mono"', 'ui-monospace', 'monospace'],
+          sans: ['Inter', '"Helvetica Neue"', 'Helvetica', 'sans-serif']
+        },
+        colors: { ink: '#000000', paper: '#ecebe6', accent: '#ff2a1f' }
+      } }
+    };
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+    body { background: #000; color: #ecebe6; }
+    body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background-image: radial-gradient(rgba(236,235,230,.14) 1px, transparent 1px); background-size: 24px 24px; }
+    .glass { background: rgba(236,235,230,.04); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid rgba(236,235,230,.14); }
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .chip { transition: border-color .2s, box-shadow .2s, color .2s; }
+    .chip:hover { border-color: #ff2a1f; color: #ff2a1f; box-shadow: 0 0 14px rgba(255,42,31,.35); }
+    .card { transition: border-color .25s, box-shadow .25s; }
+    .card:hover { border-color: #ff2a1f; box-shadow: 0 0 28px rgba(255,42,31,.22); }
+    .ulink { background: linear-gradient(#ff2a1f,#ff2a1f) 0 100% / 0 2px no-repeat; transition: background-size .25s, color .25s; }
+    .ulink:hover { background-size: 100% 2px; color: #ff2a1f; }
+    .mag { transition: transform .2s ease-out, background .2s, border-color .2s, color .2s; will-change: transform; }
+    :focus-visible { outline: 2px solid #ff2a1f; outline-offset: 3px; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+    
+    #hero-wrap::after { 
+      content: ''; position: absolute; inset: 0; 
+      background: radial-gradient(circle at 75% 50%, rgba(255,183,197,0.08), transparent 50%); 
+      z-index: -2; pointer-events: none;
+    }
+    #fruit-stage { position: absolute; top: 0; bottom: 0; right: 0; width: min(42vw, 480px);
+      pointer-events: none; overflow: hidden; z-index: -1; }
+    #fruit-stage canvas { display: block; width: 100%; height: 100%; }
+    @media (max-width: 767px) { #fruit-stage { width: 100%; opacity: .4; } } 
+    .dock-item { transition: transform .12s ease-out; will-change: transform; transform-origin: 50% 60%; display: inline-block; }
+  </style>
+</head>
+
+<body class="font-sans antialiased">
+  <header class="sticky top-0 z-50 glass border-x-0 border-t-0">
+    <nav class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between" aria-label="Primary">
+      <a href="#top" class="font-dot font-bold text-xl tracking-wide">Chinmay Ullegaddi</a>
+      <ul class="hidden md:flex gap-8 font-mono text-sm">
+        <li><a class="ulink pb-1" href="#about">About</a></li>
+        <li><a class="ulink pb-1" href="#skills">Skills</a></li>
+        <li><a class="ulink pb-1" href="#projects">Projects</a></li>
+        <li><a class="ulink pb-1" href="#contact">Contact</a></li>
+      </ul>
+      <button id="menu-btn" type="button" class="md:hidden p-2 -mr-2" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path id="menu-icon" d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-paper/15">
+      <ul class="max-w-6xl mx-auto px-5 py-2 font-mono text-sm">
+        <li><a class="block py-3 hover:text-accent" href="#about">About</a></li>
+        <li><a class="block py-3 hover:text-accent" href="#skills">Skills</a></li>
+        <li><a class="block py-3 hover:text-accent" href="#projects">Projects</a></li>
+        <li><a class="block py-3 hover:text-accent" href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="top">
+    <div id="hero-wrap" class="relative isolate">
+      <div id="fruit-stage" aria-hidden="true"></div>
+      <section class="max-w-4xl mx-auto px-5 pt-24 pb-28 sm:pt-32 text-center">
+        <h1 class="font-dot font-black text-5xl sm:text-7xl leading-[1.05]">Hi, I'm Chinmay Ullegaddi.</h1>
+        <p class="mt-6 font-mono text-sm sm:text-base text-paper/70">B.Tech CSIT Student at REVA University | Software &amp; IoT Developer</p>
+        <p class="mt-6 max-w-2xl mx-auto leading-relaxed text-paper/85">I bridge the gap between low-level hardware and data-driven web applications. From writing C and Assembly to building interactive Python dashboards and ESP32 systems, I love understanding how technology works from the ground up.</p>
+        <div class="mt-10 flex flex-wrap justify-center gap-4">
+          <a href="#projects" class="mag px-6 py-3 bg-accent text-black font-semibold hover:bg-paper">View My Work</a>
+          <a href="https://github.com/chinmayullegaddi2002-lab" target="_blank" rel="noopener noreferrer" class="mag px-6 py-3 border border-paper/40 font-semibold hover:border-accent hover:text-accent">GitHub Profile</a>
+        </div>
+      </section>
+    </div>
+
+    <section id="about" class="max-w-6xl mx-auto px-5 py-20 reveal">
+      <h2 class="font-dot font-bold text-3xl sm:text-4xl mb-10">About</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <p class="glass p-6 sm:p-8 leading-relaxed text-paper/85">I am a Computer Science and Information Technology student (SRN: R25EJ025) with a strong foundation in both software engineering and embedded systems. I focus on low-level memory operations, database management, and building practical IoT solutions. When I'm not coding, you'll probably find me training calisthenics or exploring data visualizations.</p>
+        <pre class="glass p-6 sm:p-8 font-mono text-sm leading-7 overflow-x-auto"><code>{
+  <span class="text-accent">"studying"</span>: "B.Tech CSIT, REVA University",
+  <span class="text-accent">"based_in"</span>: "Bengaluru, Karnataka",
+  <span class="text-accent">"core_focus"</span>: "IoT, Data Dashboards, &amp; Low-Level Programming"
+}</code></pre>
+      </div>
+    </section>
+
+    <section id="skills" class="max-w-6xl mx-auto px-5 py-20 reveal">
+      <h2 class="font-dot font-bold text-3xl sm:text-4xl mb-10">Skills</h2>
+      <div id="skills-grid" class="grid sm:grid-cols-2 gap-6"></div>
+    </section>
+
+    <section id="projects" class="max-w-6xl mx-auto px-5 py-20 reveal">
+      <h2 class="font-dot font-bold text-3xl sm:text-4xl mb-10">Projects</h2>
+      <div id="projects-grid" class="grid md:grid-cols-2 gap-6"></div>
+    </section>
+
+    <section id="contact" class="max-w-6xl mx-auto px-5 pt-20 pb-16 reveal">
+      <div class="border-t border-paper/20 pt-12">
+        <h2 class="font-dot font-bold text-3xl sm:text-4xl">Let's connect</h2>
+        <p class="mt-4 text-paper/80">Always open to discussing hardware, code, or new opportunities.</p>
+        <ul class="mt-8 flex flex-col sm:flex-row sm:flex-wrap gap-x-10 gap-y-4 font-mono text-sm">
+          <li><a class="ulink pb-1" href="mailto:chinmayullegaddi2002@gmail.com">chinmayullegaddi2002@gmail.com</a></li>
+          <li><a class="ulink pb-1" href="https://github.com/chinmayullegaddi2002-lab" target="_blank" rel="noopener noreferrer">github.com/chinmayullegaddi2002-lab</a></li>
+          <li><a class="ulink pb-1" href="https://linkedin.com/in/chinmay-ullegaddi-373138384" target="_blank" rel="noopener noreferrer">linkedin.com/in/chinmay-ullegaddi</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-paper/15 py-8 text-center font-mono text-xs text-paper/50">&copy; 2026 Chinmay Ullegaddi. Built from scratch.</footer>
+
+  <script>
+    const GITHUB = 'https://github.com/chinmayullegaddi2002-lab';
+
+    const skills = [
+      { group: 'Programming', items: ['C', 'C++', 'Python', 'Assembly (8051)', 'JavaScript', 'SQL (MySQL)'] },
+      { group: 'Hardware & IoT', items: ['ESP32', 'NodeMCU', 'Arduino Uno', 'Sensor Integration (IR, LDR, DS3231)'] },
+      { group: 'Data & Web', items: ['Streamlit', 'Plotly', 'Pandas', 'Folium', 'HTML/CSS'] },
+      { group: 'Tools', items: ['Git', 'GitHub', 'VS Code', 'Keil µVision', 'Oracle VirtualBox'] }
+    ];
+
+    const projects = [
+      { part: 'PRJ-02', title: 'Global YouTube Virality Dashboard', desc: 'An interactive data visualization tool to track and analyze video virality metrics.', tags: ['Python', 'Streamlit', 'Plotly', 'Pandas'], flow: ['Data', 'Pandas', 'Plotly', 'Streamlit'], result: '', link: GITHUB },
+      { part: 'PRJ-03', title: 'IoT Smart Street Light', desc: 'A motion-triggered lighting system utilizing PWM dimming logic for energy efficiency.', tags: ['Arduino', 'C', 'LDR/IR Sensors'], flow: ['LDR / IR', 'Arduino', 'PWM', 'LED'], result: '', link: GITHUB },
+      { part: 'PRJ-04', title: 'Market Mate Platform', desc: 'A web platform designed during a hackathon to connect students with local merchant marketing vacancies and track ROI.', tags: ['Web Dev', 'Database Schema', 'UI/UX'], flow: ['Students', 'Web app', 'Database', 'Merchants'], result: '', link: GITHUB },
+      { part: 'PRJ-05', title: 'Automated Fish Feeder', desc: 'A timed hardware system for automated feeding using a real-time clock and servos.', tags: ['ESP32', 'DS3231', 'C++'], flow: ['DS3231', 'ESP32', 'Servo', 'Feeder'], result: '', link: GITHUB }
+    ];
+
+    const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+    const chip = t => `<span class="chip font-mono text-xs px-3 py-1.5 border border-paper/25">${esc(t)}</span>`;
+
+    document.getElementById('skills-grid').innerHTML = skills.map(s => `
+      <div class="glass p-6">
+        <h3 class="font-mono text-sm text-paper/60 mb-4">${esc(s.group)}</h3>
+        <div class="flex flex-wrap gap-2">${s.items.map(chip).join('')}</div>
+      </div>`).join('');
+
+    const arrow = '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M7 17L17 7M8 7h9v9"/></svg>';
+    document.getElementById('projects-grid').innerHTML = projects.map(p => `
+      <article class="card glass p-6 flex flex-col">
+        <div class="flex items-start justify-between gap-4">
+          <span class="font-mono text-xs text-paper/50">${esc(p.part)}</span>
+          <a href="${p.link}" target="_blank" rel="noopener noreferrer" aria-label="Open ${esc(p.title)} on GitHub" class="hover:text-accent">${arrow}</a>
+        </div>
+        <h3 class="font-dot font-bold text-2xl mt-3">${esc(p.title)}</h3>
+        <p class="mt-3 leading-relaxed text-paper/80">${esc(p.desc)}</p>
+        ${p.result ? `<p class="mt-3 font-mono text-sm text-accent">${esc(p.result)}</p>` : ''}
+        <div class="mt-5 flex flex-wrap items-center gap-y-2 font-mono text-[11px] text-paper/70">
+          ${p.flow.map((n, i) => `${i ? '<span class="px-1.5 text-accent">&rarr;</span>' : ''}<span class="border border-paper/25 px-2 py-1">${esc(n)}</span>`).join('')}
+        </div>
+        <div class="mt-5 flex flex-wrap gap-2 flex-1 items-end">${p.tags.map(chip).join('')}</div>
+        <a href="${p.link}" target="_blank" rel="noopener noreferrer" class="ulink self-start mt-6 pb-1 font-mono text-sm">View repo</a>
+      </article>`).join('');
+
+    const btn = document.getElementById('menu-btn'), menu = document.getElementById('mobile-menu'), icon = document.getElementById('menu-icon');
+    function setMenu(open) {
+      menu.classList.toggle('hidden', !open);
+      btn.setAttribute('aria-expanded', String(open));
+      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      icon.setAttribute('d', open ? 'M6 6l12 12M18 6L6 18' : 'M4 7h16M4 12h16M4 17h16');
+    }
+    btn.addEventListener('click', () => setMenu(menu.classList.contains('hidden')));
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } }), { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    const calm = matchMedia('(prefers-reduced-motion: reduce)').matches || matchMedia('(hover: none)').matches;
+    if (!calm) document.querySelectorAll('.mag').forEach(el => {
+      el.addEventListener('mousemove', e => {
+        const r = el.getBoundingClientRect();
+        el.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.25}px, ${(e.clientY - r.top - r.height / 2) * 0.35}px)`;
+      });
+      el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+    });
+  </script>
+  
+  <script>
+  (() => {
+    'use strict';
+
+    const SAKURA_Z = -1;        
+    const THREE_URL = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+    const GLTF_URL = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js';
+
+    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isMobile = () => innerWidth < 768;
+    const isTouch = matchMedia('(pointer: coarse)').matches;
+    const rand = (a, b) => a + Math.random() * (b - a);
+    
+    const loadScript = (src) => new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = src; s.async = true; s.onload = resolve;
+      s.onerror = () => reject(new Error('Could not load ' + src));
+      document.head.appendChild(s);
+    });
+
+    function initSakura() {
+      if (reduceMotion) return;
+      const canvas = document.createElement('canvas');
+      canvas.id = 'sakura-canvas';
+      canvas.setAttribute('aria-hidden', 'true');
+      canvas.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:' + SAKURA_Z + ';';
+      document.body.prepend(canvas);
+
+      const ctx = canvas.getContext('2d');
+      const COLORS = ['#f8c8dc', '#ffb7c5', '#ffc0cb', '#ffb6c1'];
+      let W = 0, H = 0, petals = [], raf = 0, last = 0;
+      let targetCount = isMobile() ? 12 : 30;
+      let frames = 0, lastFps = performance.now();
+
+      function makePetal(anywhere) {
+        const z = rand(0.5, 1);
+        return {
+          x: rand(0, W), y: anywhere ? rand(0, H) : rand(-40, -10),
+          size: rand(5, 11) * z, vy: rand(28, 60) * z, sway: rand(14, 34),
+          phase: rand(0, 6.28), freq: rand(0.5, 1.2),
+          rot: rand(0, 6.28), vr: rand(-1.2, 1.2), flip: rand(0, 6.28),
+          alpha: rand(0.45, 0.85) * z, color: COLORS[(Math.random() * COLORS.length) | 0],
+          blur: z < 0.7 
+        };
+      }
+      function resize() {
+        const dpr = Math.min(devicePixelRatio || 1, 2);
+        W = innerWidth; H = innerHeight;
+        canvas.width = W * dpr; canvas.height = H * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        while (petals.length < targetCount) petals.push(makePetal(true));
+      }
+      function drawPetal(p) {
+        const s = p.size;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.scale(1, 0.3 + 0.7 * Math.abs(Math.cos(p.flip)));
+        ctx.globalAlpha = p.alpha;
+        if (p.blur) ctx.filter = 'blur(2px)';
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.moveTo(0, -s * 0.7);
+        ctx.bezierCurveTo(s * 0.8, -s * 1.1, s * 1.0, s * 0.3, 0, s);
+        ctx.bezierCurveTo(-s * 1.0, s * 0.3, -s * 0.8, -s * 1.1, 0, -s * 0.7);
+        ctx.fill();
+        ctx.restore();
+      }
+      function frame(now) {
+        raf = requestAnimationFrame(frame);
+        if (!last) last = now;
+        const dt = Math.min((now - last) / 1000, 0.05);
+        last = now;
+        
+        frames++;
+        if (now - lastFps > 1000) {
+            if (frames < 40 && targetCount > 5) targetCount--;
+            frames = 0;
+            lastFps = now;
+        }
+
+        ctx.clearRect(0, 0, W, H);
+        if (petals.length > targetCount) petals.length = targetCount;
+
+        for (let i = 0; i < petals.length; i++) {
+          const p = petals[i];
+          p.phase += p.freq * dt;
+          p.x += (Math.cos(p.phase) * p.sway + 12) * dt;
+          p.y += p.vy * dt;
+          p.rot += p.vr * dt;
+          p.flip += 1.6 * dt;
+          if (p.y > H + 20 || p.x > W + 30) { petals[i] = makePetal(false); petals[i].x = rand(-30, W); }
+          drawPetal(petals[i]);
+        }
+      }
+      const start = () => { if (!raf) { last = performance.now(); raf = requestAnimationFrame(frame); } };
+      const stop  = () => { if (raf) { cancelAnimationFrame(raf); raf = 0; last = 0; } };
+
+      resize();
+      addEventListener('resize', resize, { passive: true });
+      document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+      start();
+    }
+
+    function initLuffyModel() {
+      const THREE = window.THREE;
+      const stage = document.getElementById('fruit-stage');
+      const wrap = document.getElementById('hero-wrap');
+      if (!THREE || !stage || !wrap) return;
+
+      let renderer;
+      try {
+        renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'low-power' });
+      } catch (err) { return; }
+      renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+      stage.appendChild(renderer.domElement);
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 60);
+      
+      scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+      const keyLight = new THREE.DirectionalLight(0xffffff, 1); 
+      keyLight.position.set(3, 4, 5); 
+      scene.add(keyLight);
+      
+      const holder = new THREE.Group();
+      scene.add(holder);
+
+      let luffyScene = null;
+      
+      // Update this URL to point to where you host the raw .glb file.
+      // GitHub Pages Example: 'https://chinmayullegaddi2002-lab.github.io/portfolio/assets/luffy.glb'
+      // Local Example: 'assets/luffy.glb'
+      const modelUrl = 'assets/luffy.glb'; 
+
+      new THREE.GLTFLoader().load(modelUrl, (gltf) => {
+        luffyScene = gltf.scene;
+        const box = new THREE.Box3().setFromObject(luffyScene);
+        const size = box.getSize(new THREE.Vector3());
+        luffyScene.scale.setScalar(3 / Math.max(size.x, size.y, size.z));
+        box.setFromObject(luffyScene);
+        luffyScene.position.sub(box.getCenter(new THREE.Vector3()));
+        holder.add(luffyScene);
+      });
+
+      const desktop = matchMedia('(min-width: 768px)');
+      function resize() {
+        const w = stage.clientWidth, h = stage.clientHeight;
+        if (!w || !h) return;
+        renderer.setSize(w, h, false);
+        camera.aspect = w / h;
+        camera.position.set(0, 0, Math.max(5.5, 5 / camera.aspect));
+        camera.updateProjectionMatrix();
+        holder.position.x = desktop.matches ? 0.35 : 0; 
+        renderer.render(scene, camera);
+      }
+      new ResizeObserver(resize).observe(stage);
+      resize();
+
+      let mx = 0, my = 0, tx = 0, ty = 0, raf = 0, inView = true;
+      let lastMove = performance.now();
+      
+      if (!isTouch && !reduceMotion) {
+        addEventListener('pointermove', (e) => {
+          mx = (e.clientX / innerWidth) * 2 - 1; 
+          my = (e.clientY / innerHeight) * 2 - 1;
+          lastMove = performance.now();
+        }, { passive: true });
+      }
+      
+      const t0 = performance.now();
+      function frame(now) {
+        raf = requestAnimationFrame(frame);
+        const t = (now - t0) / 1000;
+        
+        if (!reduceMotion && luffyScene) {
+          holder.position.y = -0.15 + Math.sin(t * 2) * 0.03; 
+          holder.rotation.z = Math.sin(t * 1.5) * 0.02;
+          
+          if (!isTouch) {
+            if (now - lastMove > 2000) { mx = 0; my = 0; }
+            tx += (mx - tx) * 0.05;
+            ty += (my - ty) * 0.05;
+            
+            holder.rotation.y = Math.max(-0.43, Math.min(0.43, tx));
+            holder.rotation.x = Math.max(-0.26, Math.min(0.26, ty));
+          }
+        }
+        renderer.render(scene, camera);
+      }
+      
+      function sync() {
+        if (inView && !document.hidden) {
+          if (!raf) raf = requestAnimationFrame(frame);
+        } else if (raf) { cancelAnimationFrame(raf); raf = 0; }
+      }
+      new IntersectionObserver(([e]) => { inView = e.isIntersecting; sync(); }).observe(wrap);
+      document.addEventListener('visibilitychange', sync);
+      sync();
+    }
+
+    function initDock() {
+      const lists = document.querySelectorAll('header nav ul, #contact ul');
+      if (reduceMotion || matchMedia('(hover: none)').matches) return;
+      
+      lists.forEach(list => {
+        const items = [...list.children];
+        const MAX = 1.45, SPREAD = 60;     
+        let centers = [];
+        items.forEach(li => li.classList.add('dock-item'));
+        
+        const measure = () => { 
+          items.forEach(li => (li.style.transform = ''));
+          centers = items.map(li => { const r = li.getBoundingClientRect(); return r.left + r.width / 2; });
+        };
+        
+        list.addEventListener('pointerenter', measure);
+        list.addEventListener('pointermove', (e) => {
+          if (!centers.length) measure();
+          items.forEach((li, i) => {
+            const d = e.clientX - centers[i];
+            li.style.transform = 'scale(' + (1 + (MAX - 1) * Math.exp(-(d * d) / (2 * SPREAD * SPREAD))).toFixed(3) + ')';
+          });
+        });
+        list.addEventListener('pointerleave', () => items.forEach(li => (li.style.transform = '')));
+        addEventListener('resize', () => { centers = []; }, { passive: true });
+      });
+    }
+
+    initSakura();
+    initDock();
+    loadScript(THREE_URL)
+      .then(() => loadScript(GLTF_URL))
+      .then(initLuffyModel)
+      .catch(() => {});
+  })();
+  </script>
+</body>
+</html>
